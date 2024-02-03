@@ -79,20 +79,20 @@ gu255118_df = gu255118_df.astype(float)
 # ronz_df = pd.read_pickle('ronz_df.pkl')
 
 # Plot canard
-plt.scatter(canard_df['X'], canard_df['Y'])
-plt.plot(canard_df['X'], canard_df['Y'], label='Wing')
+# plt.scatter(canard_df['X'], canard_df['Y'])
+# plt.plot(canard_df['X'], canard_df['Y'], label='Wing')
 
 # Plot gu255118_df
-plt.plot(gu255118_df['X'], gu255118_df['Y'], label='Eppler 1230\nThickness: 95%\nPitch: 0°\nChord: 1250mm')
+plt.plot(gu255118_df['X'], gu255118_df['Y'], label='Eppler 1230\nThickness: 95%\nPitch: 0°\nChord: 1279mm', linewidth=0.2)
 
 # Ronz
 # plt.scatter(ronz_df['X'], ronz_df['Y'], color='green', s=7, label='Roncz R1145MS')
 
 # Set the aspect ratio to be equal
 plt.axis('equal')
-# Annotate each data point with its 'Station' value
-for index, row in canard_dim_df.iterrows():
-    plt.annotate(str(row['Station']), (row['Position'], row['Y_top']), textcoords="offset points", xytext=(0,10), ha='center')
+# # Annotate each data point with its 'Station' value
+# for index, row in canard_dim_df.iterrows():
+#     plt.annotate(str(row['Station']), (row['Position'], row['Y_top']), textcoords="offset points", xytext=(0,10), ha='center')
 
 plt.title('Wing Dimensions (Data Points)')
 plt.xlabel('X (mm)')

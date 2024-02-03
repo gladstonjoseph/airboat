@@ -32,7 +32,7 @@ desired_chord_length = 455.0
 # Scaling factor
 scale_factor = desired_chord_length / original_chord_length
 # Calculate the rotation angle in radians (5 degrees)
-rotation_angle = math.radians(-5)
+rotation_angle = math.radians(0)  # math.radians(-5)
 # Define the rotation point (leading edge)
 rotation_point_x = 0.0
 rotation_point_y = 0.0
@@ -72,10 +72,10 @@ ronz_df = pd.concat([canard_ronz_df, elevator_ronz_df], axis=0)
 canard_ronz_df.to_excel('canard_ronz_df.xlsx')
 elevator_ronz_df.to_excel('elevator_ronz_df.xlsx')
 
-# plt.scatter(ronz_df['X'], ronz_df['Y'])
-# # plt.scatter(elevator_ronz_df['X'], elevator_ronz_df['Y'])
-# plt.axis('equal')
-# plt.show()
+plt.plot(ronz_df['X'], ronz_df['Y'])
+# plt.scatter(elevator_ronz_df['X'], elevator_ronz_df['Y'])
+plt.axis('equal')
+plt.show()
 
 
 pass

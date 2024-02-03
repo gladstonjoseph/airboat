@@ -1,11 +1,12 @@
 import pandas as pd
 # import numpy as np
 import matplotlib.pyplot as plt
+import math
 
-station = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R']
-position = [1.083, 1.060, 1.035, 0.989, 0.962, 0.904, 0.843, 0.776, 0.750, 0.660, 0.591, 0.499, 0.400, 0.301, 0.189, 0.157, 0.078, 0.056]
-top = [0.277, 0.231, 0.206, 0.182, 0.172, 0.157, 0.150, 0.147, 0.148, 0.151, 0.157, 0.165, 0.176, 0.189, 0.208, 0.213, 0.228, 0.233]
-bottom = [0.333, 0.300, 0.292, 0.287, 0.286, 0.283, 0.283, 0.283, 0.282, 0.283, 0.287, 0.291, 0.299, 0.310, 0.327, 0.327, 0.337, 0.340]
+station = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+position = [0.730, 0.682, 0.596, 0.478, 0.367, 0.223, 0.127]
+top = [0.304, 0.264, 0.222, 0.187, 0.170, 0.156, 0.152]
+bottom = [0.255, 0.237, 0.214, 0.199, 0.190, 0.186, 0.185]
 
 # position_a = [1.237, 1.168, 1.102, 1.055, 0.973, 0.919, 0.817, 0.619, 0.243, 0.202]
 # top_a = [0.266, 0.202, 0.170, 0.159, 0.147, 0.146, 0.147, 0.166, 0.222, 0.230]
@@ -24,7 +25,7 @@ canard_dim_df[['Position', 'Top', 'Bottom']] = canard_dim_df[['Position', 'Top',
 canard_dim_df['Thickness'] = 600 - (canard_dim_df['Top'] + canard_dim_df['Bottom'])
 canard_dim_df['Y_top'] = 600 - canard_dim_df['Top']
 canard_dim_df['Y_bottom'] = 600 - (canard_dim_df['Top'] + canard_dim_df['Thickness'])
-canard_dim_df['Position'] = 1083 - canard_dim_df['Position']
+canard_dim_df['Position'] = 730  - canard_dim_df['Position']
 
 # plt.plot(canard_dim_df['Position'], canard_dim_df['Y_top'])
 # plt.plot(canard_dim_df['Position'], canard_dim_df['Y_bottom'])
@@ -70,20 +71,33 @@ canard_df['X'] *= scale_factor
 
 canard_df['Y'] = canard_df['Y'] + 0  # Trying to coincide with gu255118_df
 
-gu255118_df = pd.read_csv('e1230-il_mid.csv', skiprows=8)
+gu255118_df = pd.read_csv('e1230-il.csv', skiprows=8)
 gu255118_df = gu255118_df.drop(range(94 + 1, len(gu255118_df)), axis=0)
 gu255118_df = gu255118_df.rename(columns={'X(mm)': 'X', 'Y(mm)': 'Y'})
 gu255118_df = gu255118_df.astype(float)
+gu255118_df['X'] *= 2705/1279
+gu255118_df['Y'] *= 1.26 # 264/123
+gu255118_df['Y'] -= 0
+# Calculate the rotation angle in radians (5 degrees)
+rotation_angle = math.radians(0)  # math.radians(-1.2)
+# Define the rotation point (leading edge)
+rotation_point_x = 0.0
+rotation_point_y = 0.0
+# Apply the rotation to the X and Y coordinates
+gu255118_df['X'], gu255118_df['Y'] = (
+    (gu255118_df['X'] - rotation_point_x) * math.cos(rotation_angle) - (gu255118_df['Y'] - rotation_point_y) * math.sin(rotation_angle) + rotation_point_x,
+    (gu255118_df['X'] - rotation_point_x) * math.sin(rotation_angle) + (gu255118_df['Y'] - rotation_point_y) * math.cos(rotation_angle) + rotation_point_y
+)
 
 # Ronz
 # ronz_df = pd.read_pickle('ronz_df.pkl')
 
 # Plot canard
-plt.scatter(canard_df['X'], canard_df['Y'])
-plt.plot(canard_df['X'], canard_df['Y'], label='Mid_Wing')
+# plt.scatter(canard_df['X'], canard_df['Y'])
+# plt.plot(canard_df['X'], canard_df['Y'], label='strake_2', linewidth=0.2)
 
 # Plot gu255118_df
-plt.plot(gu255118_df['X'], gu255118_df['Y'], label='Eppler 1230\nThickness: 90%\nPitch: -2.5°\nChord: 794mm')
+plt.plot(gu255118_df['X'], gu255118_df['Y'], label='Eppler 1230\nThickness: 90%\nPitch: -2.5°\nChord: 794mm', linewidth = 0.2)
 
 # Ronz
 # plt.scatter(ronz_df['X'], ronz_df['Y'], color='green', s=7, label='Roncz R1145MS')
@@ -91,10 +105,10 @@ plt.plot(gu255118_df['X'], gu255118_df['Y'], label='Eppler 1230\nThickness: 90%\
 # Set the aspect ratio to be equal
 plt.axis('equal')
 # Annotate each data point with its 'Station' value
-for index, row in canard_dim_df.iterrows():
-    plt.annotate(str(row['Station']), (row['Position'], row['Y_top']), textcoords="offset points", xytext=(0,10), ha='center')
+# for index, row in canard_dim_df.iterrows():
+#     plt.annotate(str(row['Station']), (row['Position'], row['Y_top']), textcoords="offset points", xytext=(0,10), ha='center')
 
-plt.title('Mid Wing')
+plt.title('Strake 2')
 plt.xlabel('X (mm)')
 plt.ylabel('Y (mm)')
 plt.legend()

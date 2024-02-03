@@ -48,6 +48,29 @@ gu255118_df = gu255118_df.astype(float)
 
 # Ronz
 ronz_df = pd.read_pickle('ronz_df.pkl')
+# ronz_df.to_csv('~/Downloads/ronz.csv')
+# ronz_df = ronz_df.reset_index(drop=True)
+#
+# ronz_canard_df_top = ronz_df.iloc[:43, :]
+# ronz_canard_df_top = ronz_canard_df_top.iloc[::-1]
+# ronz_canard_df_bottom = ronz_df.iloc[43:148, :]
+# ronz_canard_df_bottom = ronz_canard_df_bottom.iloc[1:]
+# ronz_canard_df = pd.concat([ronz_canard_df_top, ronz_canard_df_bottom])
+# ronz_canard_df = ronz_canard_df.reset_index(drop=True)
+# ronz_canard_df = pd.concat([ronz_canard_df, ronz_canard_df.iloc[[0]].copy()], ignore_index=True)
+# ronz_canard_df.to_csv('~/Downloads/ronz_canard.csv')
+#
+# ronz_elevator_df_top = ronz_df.iloc[148:199, :]
+# ronz_elevator_df_top = ronz_elevator_df_top.iloc[::-1]
+# ronz_elevator_df_bottom = ronz_df.iloc[199:244, :]
+# ronz_elevator_df_bottom = ronz_elevator_df_bottom.iloc[1:]
+# ronz_elevator_df = pd.concat([ronz_elevator_df_top, ronz_elevator_df_bottom])
+# ronz_elevator_df = ronz_elevator_df.reset_index(drop=True)
+# ronz_elevator_df = pd.concat([ronz_elevator_df, ronz_elevator_df.iloc[[0]].copy()], ignore_index=True)
+# ronz_elevator_df.to_csv('~/Downloads/ronz_elevator.csv')
+
+
+
 
 # Plot canard
 plt.scatter(canard_df['X'], canard_df['Y'])

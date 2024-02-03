@@ -70,7 +70,9 @@ canard_df['X'] *= scale_factor
 
 canard_df['Y'] = canard_df['Y'] + 50  # Trying to coincide with gu255118_df
 
-gu255118_df = pd.read_csv('e1230-il_tip.csv', skiprows=8)
+path_name = '/Users/gladstonjoseph/Documents/Code/velocity_dimensions/e1230-il_tip.csv'
+
+gu255118_df = pd.read_csv(path_name, skiprows=8)
 gu255118_df = gu255118_df.drop(range(94 + 1, len(gu255118_df)), axis=0)
 gu255118_df = gu255118_df.rename(columns={'X(mm)': 'X', 'Y(mm)': 'Y'})
 gu255118_df = gu255118_df.astype(float)
